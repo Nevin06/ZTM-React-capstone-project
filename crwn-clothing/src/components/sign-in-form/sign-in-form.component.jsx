@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { signInWithGooglePopup, signInAuthUserWithEmailAndPassword, createUserDocumentFromAuth } from "../../utils/firebase/firebase.utils";
 import FormInput from "../form-input/form-input.component";
 import Button from "../button/button.component";
 import './sign-in-form.styles.scss';
+import { UserContext } from "../../contexts/user.context";
 
 const defaultFormFields = {
     email: '',
@@ -13,6 +14,8 @@ const SignInForm = () => {
     const [formFields, setFormFields] = useState(defaultFormFields);
     const { email, password } = formFields; // destructuring
 
+    const { setCurrentUser } = useContext(UserContext);
+
     console.log(formFields);
 
     const resetFormFields = () => {
@@ -22,9 +25,10 @@ const SignInForm = () => {
     const handleSignIn = async (event) => {
         event.preventDefault();
         try {
-          const response = await signInAuthUserWithEmailAndPassword(email, password);
-          console.log(response);
+          const { user } = await signInAuthUserWithEmailAndPassword(email, password);
+          console.log(user);
           console.log("User signed in successfully!");
+          setCurrentUser(user); // whenever user value comes back
           resetFormFields();
           // Redirect to the desired page after successful sign-in
         } catch (error) {
@@ -58,6 +62,7 @@ const SignInForm = () => {
           const { user } = await signInWithGooglePopup();
           await createUserDocumentFromAuth(user);
           console.log("User signed in with Google!");
+          setCurrentUser(user); // whenever user value comes back
           resetFormFields();
           // Redirect or handle the user's session
         } catch (error) {
