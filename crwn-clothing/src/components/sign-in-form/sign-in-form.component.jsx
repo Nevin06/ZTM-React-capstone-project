@@ -26,9 +26,9 @@ const SignInForm = () => {
         event.preventDefault();
         try {
           const { user } = await signInAuthUserWithEmailAndPassword(email, password);
-          console.log(user);
+          // console.log(user);
           console.log("User signed in successfully!");
-          setCurrentUser(user); // whenever user value comes back
+          // setCurrentUser(user); // whenever user value comes back
           resetFormFields();
           // Redirect to the desired page after successful sign-in
         } catch (error) {
@@ -62,7 +62,7 @@ const SignInForm = () => {
           const { user } = await signInWithGooglePopup();
           await createUserDocumentFromAuth(user);
           console.log("User signed in with Google!");
-          setCurrentUser(user); // whenever user value comes back
+          // setCurrentUser(user); // whenever user value comes back
           resetFormFields();
           // Redirect or handle the user's session
         } catch (error) {
