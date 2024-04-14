@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { createAuthUserWithEmailAndPassword, createUserDocumentFromAuth } from "../../utils/firebase/firebase.utils";
 import FormInput from "../form-input/form-input.component";
-import './sign-up-form.styles.scss';
+import { SignUpContainer } from './sign-up-form.styles';
 import Button from "../button/button.component";
 
 const defaultFormFields = {
@@ -28,9 +28,9 @@ const SignUpForm = () => {
         }
 
         try{
-        const { user } = await createAuthUserWithEmailAndPassword(email, password);
-        await createUserDocumentFromAuth(user, { displayName });
-        resetFormFields();
+            const { user } = await createAuthUserWithEmailAndPassword(email, password);
+            await createUserDocumentFromAuth(user, { displayName });
+            resetFormFields();
         } catch(error){
             if (error.code === 'auth/email-already-in-use'){
                 alert('Cannot create user, email already in use');
@@ -43,11 +43,11 @@ const SignUpForm = () => {
     const handleChange = (event) => {
         const { name, value } = event.target;
 
-        setFormFields({ ...formFields, [name]: value})
+        setFormFields({ ...formFields, [name]: value});
     };
 
     return (
-        <div className="sign-up-container">
+        <SignUpContainer>
         <h2>Don't have an account?</h2>
             <span>Sign up with your email and password</span>
             <form onSubmit={handleSubmit}>
@@ -60,7 +60,7 @@ const SignUpForm = () => {
                 <FormInput label="Confirm Password" type="password" required onChange={handleChange} name="confirmPassword" value={confirmPassword} />
                 <Button type="submit">Sign Up</Button>
             </form>
-        </div>
+        </SignUpContainer>
     );
 };
 

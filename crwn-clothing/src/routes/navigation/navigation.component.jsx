@@ -1,6 +1,6 @@
 import { Fragment, useContext } from 'react';
-import { Outlet } from 'react-router-dom'
-import { ReactComponent as CrwnLogo } from '../../assets/crown.svg'
+import { Outlet } from 'react-router-dom';
+import { ReactComponent as CrwnLogo } from '../../assets/crown.svg';
 import { NavigationContainer, LogoContainer, NavLinks, NavLink } from './navigation.styles';
 import { UserContext } from '../../contexts/user.context';
 import { signOutUser } from '../../utils/firebase/firebase.utils';
@@ -38,6 +38,6 @@ const Navigation = () => {
         <Outlet />
       </Fragment>
     );
-  }
+  };
 
   export default Navigation;
